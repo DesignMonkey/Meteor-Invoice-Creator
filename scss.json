@@ -1,0 +1,6 @@
+{
+  "includePaths": [
+    ".meteor/local/bower"
+  ],
+  "enableAutoprefixer": true
+}

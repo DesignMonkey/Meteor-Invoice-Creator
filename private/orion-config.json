@@ -1,0 +1,164 @@
+{
+  "generate" : {
+    "route" : {
+      "default" : {
+        "desc" : "Create a group of routes with Iron Router",
+        "variables" : [
+          {
+            "name" : "routeName",
+            "desc" : "What's the group name of your routes?"
+          },
+          {
+            "name" : "routePath",
+            "desc" : "What's the path of your first route? (e.g. /blog/:_id/view)"
+          }
+        ],
+        "files" : [
+          "private/templates/js/route.js"
+        ]
+      },
+      "es6" : {
+        "files" : [
+          "private/templates/js/route.es6.js"
+        ]
+      }
+    },
+    "collection" : {
+      "default" : {
+        "desc" : "Creates a new Mongo.Collection with a Collection2 Schema",
+        "variables" : [
+          {
+            "name" : "modelName",
+            "desc" : "What's your model called (Mongo.Collection)?"
+          }
+        ],
+        "files" : [
+          "private/templates/js/model.js",
+          "private/templates/js/publication.js"
+        ],
+        "notice" : "Dont forget to add Meteor.subscribe('__modelName__'); to your route!"
+      },
+      "es6" : {
+        "files" : [
+          "private/templates/js/model.es6.js",
+          "private/templates/js/publication.es6.js"
+        ]
+      }
+    },
+    "atom" : {
+      "default" : {
+        "desc" : "Self working components such as a searchbar or a form",
+        "variables" : [
+          {
+            "name" : "moduleName",
+            "desc" : "What's the name of your atom?"
+          }
+        ],
+        "files" : [
+          "private/templates/html/module.html",
+          "private/templates/js/module.js",
+          "private/templates/scss/module.scss"
+        ]
+      },
+      "es6" : {
+        "files" : [
+          "private/templates/jade/module.jade",
+          "private/templates/js/module.es6.js",
+          "private/templates/sass/module.sass"
+        ]
+      }
+    },
+    "molecule" : {
+      "default" : {
+        "desc" : "Self working components such as a searchbar or a form",
+        "variables" : [
+          {
+            "name" : "moduleName",
+            "desc" : "What's the name of your molecule?"
+          }
+        ],
+        "files" : [
+          "private/templates/html/module.html",
+          "private/templates/js/module.js",
+          "private/templates/scss/module.scss"
+        ]
+      },
+      "es6" : {
+        "files" : [
+          "private/templates/jade/module.jade",
+          "private/templates/js/module.es6.js",
+          "private/templates/sass/module.sass"
+        ]
+      }
+    },
+    "organism" : {
+      "default" : {
+        "desc" : "Self working components such as a searchbar or a form",
+        "variables" : [
+          {
+            "name" : "moduleName",
+            "desc" : "What's the name of your organism?"
+          }
+        ],
+        "files" : [
+          "private/templates/html/module.html",
+          "private/templates/js/module.js",
+          "private/templates/scss/module.scss"
+        ]
+      },
+      "es6" : {
+        "files" : [
+          "private/templates/jade/module.jade",
+          "private/templates/js/module.es6.js",
+          "private/templates/sass/module.sass"
+        ]
+      }
+    },
+    "template" : {
+      "default" : {
+        "desc" : "Self working components such as a searchbar or a form",
+        "variables" : [
+          {
+            "name" : "moduleName",
+            "desc" : "What's the name of your template?"
+          }
+        ],
+        "files" : [
+          "private/templates/html/module.html",
+          "private/templates/js/module.js",
+          "private/templates/scss/module.scss"
+        ]
+      },
+      "es6" : {
+        "files" : [
+          "private/templates/jade/module.jade",
+          "private/templates/js/module.es6.js",
+          "private/templates/sass/module.sass"
+        ]
+      }
+    },
+    "page" : {
+      "default" : {
+        "desc" : "Self working components such as a searchbar or a form",
+        "variables" : [
+          {
+            "name" : "moduleName",
+            "desc" : "What's the name of your page?"
+          }
+        ],
+        "files" : [
+          "private/templates/html/module.html",
+          "private/templates/js/module.js",
+          "private/templates/scss/module.scss"
+        ]
+      },
+      "es6" : {
+        "files" : [
+          "private/templates/jade/module.jade",
+          "private/templates/js/module.es6.js",
+          "private/templates/sass/module.sass"
+        ]
+      }
+    }
+  }
+}

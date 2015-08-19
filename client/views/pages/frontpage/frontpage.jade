@@ -1,0 +1,40 @@
+template(name="frontpage")
+
+  .container
+    .row
+      .col-md-12
+        h1 Invoice Creator
+
+        input(type="number" data-bind="value: rate")
+
+      .col-md-12
+
+        table.table
+          thead
+            tr
+              th #
+              th Description
+              th Calculation
+              th Qty
+              th Total
+          tbody
+
+            +headline(label="Opstart")
+
+            each beforeStartItems
+              tr
+                td
+                  input(type="checkbox" data-bind="checked: isActive({{active}})")
+                td
+                  input(type="text" data-bind="value: getValue('{{desc}}')")
+                td {{calc.label}}
+                td {{calc.min}}
+                td {{nicePrice calc.min}}
+
+
+
+
+template(name="headline")
+  tr
+    td(colspan="5" class="headline")
+      h3 {{label}}
