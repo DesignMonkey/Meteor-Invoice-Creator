@@ -13,6 +13,7 @@ mquandalle:jade
 twbs:bootstrap
 
 aldeed:collection2
+aldeed:autoform
 raix:handlebar-helpers
 meteortoys:allthings
 

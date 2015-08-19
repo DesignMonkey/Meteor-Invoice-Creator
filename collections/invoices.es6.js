@@ -1,18 +1,64 @@
 Invoices = new Mongo.Collection('Invoices');
 
-// Posts.attachSchema(
-//   new SimpleSchema({
-//     title: {
-//       type: String
-//     },
-//     content: {
-//       type: String
-//     },
-//     createdAt: {
-//       type: Date
-//     }
-//   })
-// );
+CalcSchema = new SimpleSchema({
+  label: {
+    type: String,
+    label: 'Overskrift'
+  },
+  min: {
+    type: Number,
+    label: 'Min timer'
+  },
+  max: {
+    type: Number,
+    label: 'Max timer'
+  }
+});
+
+OrderlineSchema = new SimpleSchema({
+  label: {
+    type: String,
+    label: 'Placering',
+    allowedValues: ['Opstart', 'Sidetyper', 'Komponenter', 'Diverse', 'Projektstyring']
+  },
+  active: {
+    type: Boolean,
+    label: 'Aktiv'
+  },
+  description: {
+    type: String,
+    label: 'Beskrivelse'
+  },
+  calc: {
+    type: [CalcSchema],
+    label: 'Beregning'
+  }
+})
+
+InvoiceSchema = new SimpleSchema({
+  name: {
+    type: String,
+    label: 'Overskrift'
+  },
+  rate: {
+    type: Number,
+    label: 'Timepris'
+  },
+  managementPercent: {
+    type: Number,
+    label: 'Projektstyrings %'
+  },
+  orderlines: {
+    type: [OrderlineSchema],
+    label: 'Projektstyrings %'
+  },
+  createdAt: {
+    type: Date
+  }
+});
+
+Invoices.attachSchema(InvoiceSchema);
+
 
 // Collection2 already does schema checking
 // Add custom permission rules if needed
@@ -30,14 +76,14 @@ if (Meteor.isServer) {
     managementPercent: 5,
     orderlines: [
       {
-        label: 'before',
+        label: 'Opstart',
         active: true,
-        desc: 'Møder',
-        calc: {
+        description: 'Møder',
+        calc: [{
           label: 'Timer',
           min: 6,
           max: 8
-        }
+        }]
       }
 
     ]
@@ -46,7 +92,7 @@ if (Meteor.isServer) {
   //Invoices.remove({});
   if(Invoices.find().count() == 1) {
     var id = Invoices.findOne()._id;
-    Invoices.update({ _id: id}, firstObj);
+    Invoices.update({ _id: id}, { $set: firstObj });
   }
   else {
     Invoices.insert(firstObj);
