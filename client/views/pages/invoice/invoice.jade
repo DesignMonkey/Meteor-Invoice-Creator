@@ -1,0 +1,38 @@
+template(name="invoice")
+
+  .container
+    .row
+      .col-md-12
+        h1 {{name}}
+
+        input(type="number" data-bind="value: rate")
+
+      .col-md-12
+
+        table.table
+          thead
+            tr
+              th #
+              th Description
+              th Calculation
+              th Qty
+              th Total
+          tbody
+
+            +headline(label="Opstart")
+
+            each beforeItems
+              tr
+                td
+                  input(type="checkbox" $dyn = checkboxAttr)
+                td
+                  input(type="text" value="{{desc}}")
+                td {{calc.label}}
+                td {{calc.min}}
+                td {{nicePrice calc.min}}
+
+
+template(name="headline")
+  tr
+    td(colspan="5" class="headline")
+      h3 {{label}}
