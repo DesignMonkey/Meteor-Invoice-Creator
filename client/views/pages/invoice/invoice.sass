@@ -3,6 +3,124 @@
 //------------------------------------//
 
 @import ../../../stylesheets/init
+$color-bgblue: #00457B;
 
-.invoice 
+section.settings
+  padding: 20px 0 30px 0
 
+section.header
+  background: $color-bgblue;
+  .header-row
+    .th
+      color: white
+      font-size: 16px
+      padding-top: 15px
+      padding-bottom: 15px
+
+      &.right
+        text-align: right
+
+
+section.invoice
+  background: #eaeaea;
+
+  .headline h3
+    color: #ABABAB;
+    text-transform: uppercase;
+
+  .td
+    .help-block
+      display: none
+    .form-group
+      margin-bottom: 0
+
+    input.head
+      font-size: 16px
+      background-color: transparent;
+      border-top: none;
+      box-shadow: none;
+      border-left: none;
+      border-right: none;
+      border-radius: 0;
+      padding-left: 0
+      font-weight: bold
+      margin-bottom: 0px
+
+    textarea.description
+      font-size: 12px
+      background-color: transparent;
+      border-top: none;
+      box-shadow: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 0;
+      padding-left: 0
+
+    .calc-box
+      float: left
+      width: 100%
+
+
+      .checkbox
+        float: left
+        width: 30px
+      .calc-head
+        float: left
+        width: calc(100% - 30px)
+        font-size: 11px
+        background-color: transparent;
+        border-top: none;
+        box-shadow: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        padding-left: 0
+        text-transform: uppercase
+        font-weight: bold
+        margin-bottom: 5px
+        max-width: 145px
+        margin-right: 5px
+
+
+      .calc-min,
+      .calc-max
+        width: calc(50% - 40px)
+        float: left
+        max-width: 60px
+
+      span.sep,
+      span.hours
+        float: left
+        padding: 7px 4px
+
+      span.hours
+        display: none
+
+
+    &.right
+      text-align: right
+
+  .orderlines
+    form:nth-child(odd) .orderline
+      background-color: #DEDEDE
+    .orderline
+      padding: 15px 0 15px 0
+
+  .button-line
+    padding: 10px 0
+
+section.total
+  background: $color-bgblue;
+  color: white;
+  padding: 25px 0
+
+  .td
+    padding: 5px 15px
+
+    &.right
+      text-align: right
+
+
+  .totalprice-vat
+    font-size: 24px

@@ -1,63 +1,88 @@
 Invoices = new Mongo.Collection('Invoices');
+Orderlines = new Mongo.Collection('Orderlines');
 
 CalcSchema = new SimpleSchema({
   label: {
     type: String,
-    label: 'Overskrift'
+    defaultValue: 'Timer'
   },
   min: {
     type: Number,
-    label: 'Min timer'
+    defaultValue: 0
   },
   max: {
     type: Number,
-    label: 'Max timer'
+    defaultValue: 0
+  },
+  active: {
+    type: Boolean,
+    defaultValue: false,
+    label: '\n'
   }
 });
 
 OrderlineSchema = new SimpleSchema({
-  label: {
-    type: String,
-    label: 'Placering',
-    allowedValues: ['Opstart', 'Sidetyper', 'Komponenter', 'Diverse', 'Projektstyring']
+  userId: {
+    type: String
   },
-  active: {
-    type: Boolean,
-    label: 'Aktiv'
+  invoiceId: {
+    type: String
+  },
+  orderNum: {
+    type: Number,
+    optional: true
+  },
+  label: {
+    type: String
+  },
+  head: {
+    type: String,
+    label: '',
+    defaultValue: 'Ny linie'
   },
   description: {
     type: String,
-    label: 'Beskrivelse'
+    label: '',
+    defaultValue: 'Beskrivelse...',
+    autoform: {
+      rows: 2
+    },
+    optional: true
   },
-  calc: {
-    type: [CalcSchema],
-    label: 'Beregning'
+  calc1: {
+    type: CalcSchema
+  },
+  calc2: {
+    type: CalcSchema
+  },
+  calc3: {
+    type: CalcSchema
   }
 })
 
 InvoiceSchema = new SimpleSchema({
+  userId: {
+    type: String
+  },
   name: {
     type: String,
-    label: 'Overskrift'
+    label: 'Overskrift',
+    defaultValue: 'Nyt tilbud'
   },
   rate: {
     type: Number,
-    label: 'Timepris'
+    label: 'Timepris',
+    defaultValue: 1000
   },
   managementPercent: {
     type: Number,
-    label: 'Projektstyrings %'
-  },
-  orderlines: {
-    type: [OrderlineSchema],
-    label: 'Projektstyrings %'
-  },
-  createdAt: {
-    type: Date
+    label: 'Projektstyrings %',
+    defaultValue: 5
   }
 });
 
 Invoices.attachSchema(InvoiceSchema);
+Orderlines.attachSchema(OrderlineSchema);
 
 
 // Collection2 already does schema checking
@@ -69,34 +94,11 @@ if (Meteor.isServer) {
     remove : () => true
   });
 
-  // Fixtures
-  var firstObj = {
-    name: 'Test invoice 2',
-    rate: 950,
-    managementPercent: 5,
-    orderlines: [
-      {
-        label: 'Opstart',
-        active: true,
-        description: 'Møder',
-        calc: [{
-          label: 'Timer',
-          min: 6,
-          max: 8
-        }]
-      }
-
-    ]
-  };
-
-  //Invoices.remove({});
-  if(Invoices.find().count() == 1) {
-    var id = Invoices.findOne()._id;
-    Invoices.update({ _id: id}, { $set: firstObj });
-  }
-  else {
-    Invoices.insert(firstObj);
-  }
+  Orderlines.allow({
+    insert : () => true,
+    update : () => true,
+    remove : () => true
+  });
 
 }
 
@@ -104,4 +106,7 @@ if (Meteor.isServer) {
 Invoices.timestampable();
 Invoices.softRemovable();
 Invoices.trackable('Invoices');
+// Orderlines.timestampable();
+// Orderlines.softRemovable();
+// Orderlines.trackable('Orderlines');
 

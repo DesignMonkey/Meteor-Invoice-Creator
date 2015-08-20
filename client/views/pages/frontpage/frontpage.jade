@@ -3,12 +3,18 @@ template(name="frontpage")
   .container
     .row
       .col-md-12
-        h1 Invoice Creator
-
-        ul
+        if $.Meteor.userId
+          h1 Tilbuds Generator
           each invoices
-            li
+            h3
               a(href="{{pathFor 'invoice' _id}}") {{name}}
+
+          input#invoiceTitle.form-control(placeholder="Titel på nyt tilbud")
+          button#addInvoice.btn.btn-success + Nyt tilbud
+
+        else
+          h1 Login
+          +loginButtons
 
 
 
