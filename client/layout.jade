@@ -1,4 +1,16 @@
 template(name="layout")
+  .navbar.navbar-default(role="navigation")
+    .navbar-header
+      a.navbar-brand(href="/") Inovoice Creator
+      button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target=".navbar-collapse")
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+    .navbar-collapse.collapse
+      ul.nav.navbar-nav.navbar-right
+        +loginButtons
+
   +yield
 
 

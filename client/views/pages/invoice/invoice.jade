@@ -87,11 +87,9 @@ template(name="orderlines")
                 +afQuickField(name='calc3.max' class="calc-max")
                 span.hours timer
 
-          .col-md-1.td.right
-            {{ niceQty calculatedHours }}
+          .col-md-1.td.right {{ niceQty calculatedHours }}
 
-          .col-md-2.td.right
-            {{ nicePrice calculatedHours }}
+          .col-md-2.td.right {{ nicePrice calculatedHours }}
 
   .row
     .button-line

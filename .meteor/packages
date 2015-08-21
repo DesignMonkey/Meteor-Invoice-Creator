@@ -6,7 +6,7 @@
 
 meteor-platform
 accounts-password
-mrt:accounts-ui-bootstrap-3
+ian:accounts-ui-bootstrap-3
 
 fourseven:scss
 grigio:babel
