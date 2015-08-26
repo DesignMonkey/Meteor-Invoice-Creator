@@ -3,13 +3,13 @@
 //------------------------------------//
 
 @import ../../../stylesheets/init
-$color-bgblue: #00457B;
+$color-bgblue: #00457B
 
 section.settings
   padding: 20px 0 30px 0
 
 section.header
-  background: $color-bgblue;
+  background: $color-bgblue
   .header-row
     .th
       color: white
@@ -22,11 +22,63 @@ section.header
 
 
 section.invoice
-  background: #eaeaea;
+  background: #eaeaea
 
-  .headline h3
-    color: #ABABAB;
-    text-transform: uppercase;
+  .sortable
+    position: relative
+    transition: all 0.2s ease-in-out
+    //transform: rotate(0deg)
+    opacity: 1
+
+
+    .controls
+      position: absolute
+      top: 38px
+      left: -30px
+      transition: all 0.4s ease-in-out
+      opacity: 0
+
+      .delLine
+        background: red
+        color: white
+        width: 32px
+        height: 32px
+        float: left
+        text-align: center
+        line-height: 32px
+        border: none
+
+      .drag
+        background: lightgrey
+        color: white
+        width: 32px
+        height: 32px
+        float: left
+        text-align: center
+        line-height: 32px
+
+    &:hover,&.dragging
+      padding-left: 80px
+
+      .controls
+        opacity: 1
+        left: -15px
+
+    &.dragging
+      opacity: 0.7
+
+  .headline
+    color: #ABABAB
+    text-transform: uppercase
+    background-color: transparent
+    border-top: none
+    box-shadow: none
+    border-left: none
+    border-right: none
+    border-radius: 0
+    font-size: 20px
+    height: auto
+    padding-left: 0
 
   .td
     .help-block
@@ -36,25 +88,25 @@ section.invoice
 
     input.head
       font-size: 16px
-      background-color: transparent;
-      border-top: none;
-      box-shadow: none;
-      border-left: none;
-      border-right: none;
-      border-radius: 0;
+      background-color: transparent
+      border-top: none
+      box-shadow: none
+      border-left: none
+      border-right: none
+      border-radius: 0
       padding-left: 0
       font-weight: bold
       margin-bottom: 0px
 
     textarea.description
       font-size: 12px
-      background-color: transparent;
-      border-top: none;
-      box-shadow: none;
-      border-left: none;
-      border-right: none;
-      border-bottom: none;
-      border-radius: 0;
+      background-color: transparent
+      border-top: none
+      box-shadow: none
+      border-left: none
+      border-right: none
+      border-bottom: none
+      border-radius: 0
       padding-left: 0
 
     .calc-box
@@ -69,12 +121,12 @@ section.invoice
         float: left
         width: calc(100% - 30px)
         font-size: 11px
-        background-color: transparent;
-        border-top: none;
-        box-shadow: none;
-        border-left: none;
-        border-right: none;
-        border-radius: 0;
+        background-color: transparent
+        border-top: none
+        box-shadow: none
+        border-left: none
+        border-right: none
+        border-radius: 0
         padding-left: 0
         text-transform: uppercase
         font-weight: bold
@@ -111,8 +163,8 @@ section.invoice
     padding: 10px 0
 
 section.total
-  background: $color-bgblue;
-  color: white;
+  background: $color-bgblue
+  color: white
   padding: 25px 0
 
   .td

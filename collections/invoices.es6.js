@@ -25,15 +25,16 @@ OrderlineSchema = new SimpleSchema({
   userId: {
     type: String
   },
+  linetype: {
+    type: String,
+    allowedValues: ["orderline", "headline"]
+  },
   invoiceId: {
     type: String
   },
   orderNum: {
     type: Number,
     optional: true
-  },
-  label: {
-    type: String
   },
   head: {
     type: String,
@@ -89,15 +90,27 @@ Orderlines.attachSchema(OrderlineSchema);
 // Add custom permission rules if needed
 if (Meteor.isServer) {
   Invoices.allow({
-    insert : () => true,
-    update : () => true,
-    remove : () => true
+    insert: function(userId, doc) {
+      return (userId != undefined);
+    },
+    update: function(userId, doc) {
+      return userId == doc.userId;
+    },
+    remove: function(userId, doc) {
+      return userId == doc.userId;
+    }
   });
 
   Orderlines.allow({
-    insert : () => true,
-    update : () => true,
-    remove : () => true
+    insert: function(userId, doc) {
+      return (userId != undefined);
+    },
+    update: function(userId, doc) {
+      return userId == doc.userId;
+    },
+    remove: function(userId, doc) {
+      return userId == doc.userId;
+    }
   });
 
 }

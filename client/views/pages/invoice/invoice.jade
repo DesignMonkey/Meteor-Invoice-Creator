@@ -13,6 +13,24 @@ template(name="invoice")
           .col-md-3
             +afQuickField(name='managementPercent')
 
+          .col-md-4
+            .col-md-6
+              .radio
+                label
+                  input(type="radio" name="linetype" value="headline")
+                  | Overskrift
+            .col-md-6
+              .radio
+                label
+                  input(type="radio" name="linetype" value="orderline" checked="checked")
+                  | Ordrelinie
+          .col-md-6
+            input(type="text" id="lineHeader" class="form-control" placeholder="Overskrift")
+          .col-md-2
+            button.addOrderline.btn.btn-success
+              i.fa.fa-plus
+              | Tilføj ny linie
+
   section.header
     .container
       .row.header-row
@@ -23,82 +41,76 @@ template(name="invoice")
 
   section.invoice
     .container
-      +headline(label="Opstart og indledning")
-      +orderlines(label="preparation" invoiceId=_id parent=this)
+      .orderlines
+        +each getOrderlines
+          +autoForm(collection="Orderlines" trimStrings=false autosaveOnKeyup=true autosave=true doc=this id=this._id type="update")
+            .sortable(id=_id)
+              .controls
+                button.delLine
+                  i.fa.fa-trash-o
+                .drag
+                  i.fa.fa-bars
 
-      +headline(label="Dokumenttyper")
-      +orderlines(label="doctypes" invoiceId=_id parent=this)
+              if $eq linetype 'headline'
+                .row.headline
+                  .col-md-12
+                    +afQuickField(name='head' class="headline" label=" " placeholder="Overskrift")
+              else
+                .row.orderline
+                  //.col-md-1.td
+                  //  +afQuickField(name='active' class='removeLabels')
+                  .col-md-5.td
+                    +afQuickField(name='head' class="head")
+                    +afQuickField(name='description' class="description")
+                  .col-md-4.td
+                    .calc-box
+                      +afQuickField(name='calc1.active' class='removeLabels')
+                      if calc1.active
+                        +afQuickField(name='calc1.label' class="calc-head")
+                        +afQuickField(name='calc1.min' class="calc-min")
+                        span.sep -
+                        +afQuickField(name='calc1.max' class="calc-max")
+                        span.hours timer
+                    .calc-box
+                      if calc1.active
+                        +afQuickField(name='calc2.active' class='removeLabels')
+                      if bothActive calc1.active calc2.active
+                        +afQuickField(name='calc2.label' class="calc-head")
+                        +afQuickField(name='calc2.min' class="calc-min")
+                        span.sep -
+                        +afQuickField(name='calc2.max' class="calc-max")
+                        span.hours timer
+                    .calc-box
+                      if bothActive calc1.active calc2.active
+                        +afQuickField(name='calc3.active' class='removeLabels')
+                      if allActive calc1.active calc2.active calc3.active
+                        +afQuickField(name='calc3.label' class="calc-head")
+                        +afQuickField(name='calc3.min' class="calc-min")
+                        span.sep -
+                        +afQuickField(name='calc3.max' class="calc-max")
+                        span.hours timer
 
-      +headline(label="Komponenter")
-      +orderlines(label="components" invoiceId=_id parent=this)
+                  .col-md-1.td.right {{ niceQty calculatedHours }}
 
-      +headline(label="Diverse")
-      +orderlines(label="misc" invoiceId=_id parent=this)
+                  .col-md-2.td.right {{ nicePrice calculatedHours }}
+
+
 
   section.total
     .container
       .row.totalprice
         .col-md-10.td Total
-        .col-md-2.td.right {{ nicePrice getTotalPrice 1}}
+        .col-md-2.td.right {{ niceTotalPrice getTotalPrice 1}}
       .row.vat
         .col-md-10.td Moms
-        .col-md-2.td.right {{ nicePrice getTotalPrice 0.25}}
+        .col-md-2.td.right {{ niceTotalPrice getTotalPrice 0.25}}
       .row.totalprice-vat
         .col-md-10.td Total
-        .col-md-2.td.right {{ nicePrice getTotalPrice 1.25 }}
+        .col-md-2.td.right {{ niceTotalPrice getTotalPrice 1.25 }}
 
 
-template(name="orderlines")
-  .orderlines
-    +each getOrderlines label invoiceId
-      +autoForm(collection="Orderlines" trimStrings=false autosaveOnKeyup=true autosave=true doc=this id=this._id type="update")
-
-        .row.orderline
-          //.col-md-1.td
-          //  +afQuickField(name='active' class='removeLabels')
-          .col-md-5.td
-            +afQuickField(name='head' class="head")
-            +afQuickField(name='description' class="description")
-          .col-md-4.td
-            .calc-box
-              +afQuickField(name='calc1.active' class='removeLabels')
-              if calc1.active
-                +afQuickField(name='calc1.label' class="calc-head")
-                +afQuickField(name='calc1.min' class="calc-min")
-                span.sep -
-                +afQuickField(name='calc1.max' class="calc-max")
-                span.hours timer
-            .calc-box
-              if calc1.active
-                +afQuickField(name='calc2.active' class='removeLabels')
-              if bothActive calc1.active calc2.active
-                +afQuickField(name='calc2.label' class="calc-head")
-                +afQuickField(name='calc2.min' class="calc-min")
-                span.sep -
-                +afQuickField(name='calc2.max' class="calc-max")
-                span.hours timer
-            .calc-box
-              if bothActive calc1.active calc2.active
-                +afQuickField(name='calc3.active' class='removeLabels')
-              if allActive calc1.active calc2.active calc3.active
-                +afQuickField(name='calc3.label' class="calc-head")
-                +afQuickField(name='calc3.min' class="calc-min")
-                span.sep -
-                +afQuickField(name='calc3.max' class="calc-max")
-                span.hours timer
-
-          .col-md-1.td.right {{ niceQty calculatedHours }}
-
-          .col-md-2.td.right {{ nicePrice calculatedHours }}
-
-  .row
-    .button-line
-      button.addOrderline.btn.btn-success + Tilføj ny linie
 
 
-template(name="headline")
-  .row
-    .headline
-      h3 {{label}}
+
 
 

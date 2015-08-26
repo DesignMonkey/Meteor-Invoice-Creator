@@ -13,6 +13,8 @@ grigio:babel
 mquandalle:jade
 
 twbs:bootstrap
+mizzao:jquery-ui
+fortawesome:fontawesome
 
 aldeed:collection2
 aldeed:autoform

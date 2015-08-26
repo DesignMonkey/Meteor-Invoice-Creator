@@ -1,8 +1,9 @@
 Template['invoice'].helpers({
-  nicePrice: function(price, times) {
+  niceTotalPrice: function(price, times) {
     return 'kr. '+ (parseFloat(price) * times).formatMoney(2, ',', '.');
   },
   getTotalPrice: function() {
+
     var self = this;
     var totalSum = 0;
     var totalPercent = 0;
@@ -25,16 +26,12 @@ Template['invoice'].helpers({
     });
     return totalSum + (totalSum / 100 * totalPercent);
 
-  }
-});
-
-Template['orderlines'].helpers({
+  },
   nicePrice: function(hours) {
-    var hourRate = Template.instance().data.parent.rate;
-    var managementPercent = Template.instance().data.parent.managementPercent;
+    var hourRate = Template.instance().data.rate;
+    var managementPercent = Template.instance().data.managementPercent;
     if(hours == -1) {
       var totalSum = 0;
-      console.log(Orderlines.find().fetch());
       _.each(Orderlines.find().fetch(), function(ol) {
         var totalHours = 0;
         var calculating = false;
@@ -55,8 +52,8 @@ Template['orderlines'].helpers({
       return 'kr. '+ (parseFloat(hours) * hourRate).formatMoney(2, ',', '.');
     }
   },
-  getOrderlines: function(_label, _id) {
-    return Orderlines.find({ invoiceId: _id, label: _label })
+  getOrderlines: function() {
+    return Orderlines.find({ invoiceId: Template.instance().data._id }, { sort: { orderNum: 1 }})
   },
   calculatedHours: function() {
     var self = this;
@@ -79,7 +76,7 @@ Template['orderlines'].helpers({
   },
   niceQty: function(hours) {
     if(hours == -1) {
-      var percentRate = Template.instance().data.parent.managementPercent;
+      var percentRate = Template.instance().data.managementPercent;
       return percentRate +"%";
     }
     else {
@@ -88,10 +85,13 @@ Template['orderlines'].helpers({
   }
 });
 
-Template['orderlines'].events({
+
+Template['invoice'].events({
   'click .addOrderline': function(e) {
     e.preventDefault();
-    Meteor.call('addOrderline', this.label, this.invoiceId, function() {
+    var linetype = $("input[name='linetype']:checked").val();
+    var headline = $("#lineHeader").val();
+    Meteor.call('addOrderline', linetype, headline, this._id, function() {
       $(".td label").each(function() {
         if($(this).closest('.checkbox').length == 0) {
           $(this).hide();
@@ -107,6 +107,11 @@ Template['orderlines'].events({
         }
       });
     }, 100);
+  },
+  'click .delLine': function(e) {
+    e.preventDefault();
+    Meteor.call('removeOrderline', this.invoiceId, this._id);
+
   }
 });
 
@@ -120,6 +125,33 @@ Template['invoice'].onRendered(function() {
   $(".td label").each(function() {
     if($(this).closest('.checkbox').length == 0) {
       $(this).hide();
+    }
+  });
+
+  $(".orderlines").sortable({
+    items: ".sortable",
+    // delay: 100,
+    // refreshPositions: true,
+    // revert: true,
+    // helper: "clone",
+    // scroll: true,
+    // scrollSensitivity: 50,
+    // scrollSpeed: 35,
+    start: function(event, ui) {
+      $(ui.helper).addClass("dragging");
+    }, // end of start
+    stop: function(event, ui) {
+      $(ui.item).removeClass("dragging");
+    }, // end of stop
+    update: function(event, ui) {
+      var index = 1;
+      _.each($(".sortable"), function(item) {
+        Orderlines.update({_id: item.id}, {
+          $set:{
+            orderNum: index++,
+          }
+        });
+      });
     }
   });
 });
