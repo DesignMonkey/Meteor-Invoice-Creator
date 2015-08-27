@@ -7,6 +7,7 @@
 meteor-platform
 accounts-password
 ian:accounts-ui-bootstrap-3
+copleykj:jquery-autosize
 
 fourseven:scss
 grigio:babel
@@ -33,4 +34,5 @@ manuelschoebel:wait-on-lib
 sewdn:collection-behaviours
 meteorhacks:fast-render
 fastclick
+
 

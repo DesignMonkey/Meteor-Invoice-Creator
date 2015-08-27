@@ -128,6 +128,8 @@ Template['invoice'].onRendered(function() {
     }
   });
 
+  $('textarea.description').autosize();
+
   $(".orderlines").sortable({
     items: ".sortable",
     // delay: 100,
